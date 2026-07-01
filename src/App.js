@@ -4,6 +4,7 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Mermaid from "./Mermaid";
 
 const App = () => {
   const [markdown, setMarkdown] = useState("# githubmd");
@@ -26,6 +27,13 @@ const App = () => {
             components={{
               code({ node, inline, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || "");
+                if (!inline && match && match[1] === "mermaid") {
+                  return (
+                    <Mermaid
+                      chart={String(children).replace(/\n$/, "")}
+                    />
+                  );
+                }
                 return !inline && match ? (
                   <SyntaxHighlighter
                     children={String(children).replace(/\n$/, "")}
