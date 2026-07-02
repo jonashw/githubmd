@@ -43,11 +43,9 @@ const App = () => {
                     {...props}
                   />
                 ) : (
-                  <SyntaxHighlighter
-                    children={children}
-                    style={materialDark}
-                    {...props}
-                  />
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
                 );
               },
             }}
